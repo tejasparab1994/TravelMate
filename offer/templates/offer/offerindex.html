@@ -1,0 +1,17 @@
+<h1>Offer Parameters<h1>
+
+
+  <form action = "{% url 'offer:offerdetails' %}" method = "post">
+    {% csrf_token %}
+    <input type = "textfield" id = "fromlocation" name = "fromlocation">
+    <label for = "fromlocation"> From Location </label>
+    <input type = "textfield" id = "tolocation" name = "tolocation">
+    <label for = "tolocation"> To Location </label>
+    <input type = "textfield" id = "startdate" name = "startdate">
+    <label for = "startdate"> Start Date </label>
+    <input type = "textfield" id = "numberofpassengers" name = "numberofpassengers">
+    <label for = "numberofpassengers"> Number of passengers </label>
+    <input type = "textfield" id = "fare" name = "fare">
+    <label for = "fare"> Fare </label>
+    <input type = "submit" value = "Post">
+  </form>
