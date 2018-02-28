@@ -1,2 +1,3 @@
 # TravelMate
-Project part of the course CS-5340 HCI
+Project as part of the course CS-5340 HCI
+
