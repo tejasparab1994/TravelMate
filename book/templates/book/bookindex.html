@@ -22,7 +22,7 @@
     <nav class="navbar navbar-default navbar-fixed-top" data-spy="affix" data-offset-top="10">
         <div class="container">
           <div class="navbar-header">
-            <div class="logo"> <a href="/index.html"><img src="static/images/logo1.png" alt="image"/></a> </div>
+            <div class="logo"> <a href="{% url 'travel:index' %}"><img src="{%static 'images/logo1.png'%}" alt="image"/></a> </div>
             <button id="menu_slide" data-target="#navigation" aria-expanded="false" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>

@@ -30,7 +30,7 @@ $(document).ready(function(){
   <header id="header">
 
     <nav class="navbar navbar-default navbar-fixed-top" data-spy="affix" data-offset-top="10">
-      <div class="float-left"> <a href="/index.html"><img src="{% static 'images/logo1.png'%}" alt="image"/></a> </div>
+      <div class="float-left"> <a href="{% url 'travel:index' %}"><img src="{% static 'images/logo1.png'%}" alt="image"/></a> </div>
       <div class="container">
         <div class="navbar-header">
 
@@ -92,7 +92,7 @@ $(document).ready(function(){
 
         </div>
         <div class="card-block, text-right">
-            <button class="btn btn-success confirmcrd">Confirm</button>
+            <button id="demo" class="btn btn-success confirmcrd" onclick="myFunction()" data-toggle="modal" data-target="#myModal">Confirm</button>
         </div>
       </div>
 
@@ -111,6 +111,37 @@ $(document).ready(function(){
 
     </div>
   </div>
+<div class="container">
+ <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
 
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+          <h4 class="modal-title">Congrats</h4>
+        </div>
+        <div class="modal-body">
+          <p>You successfully enlisted your Ride.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
 </body>
+<script>
+function myFunction() {
+    document.getElementById("demo").style.background = "grey";
+    document.getElementById("demo").textContent = "Confirmed";
+}
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </html>
