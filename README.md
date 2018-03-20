@@ -1,3 +1,2 @@
 # TravelMate
-Project as part of the course CS-5340 HCI
-
+CS 5340: Human Computer Interaction - Project -Car Pooling application
