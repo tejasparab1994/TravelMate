@@ -13,7 +13,7 @@
 
 <!--Date Picker-->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"> </script>
-<link rel="stylesheet" href="https://jonthornton.github.io/jquery-timepicker/jquery.timepicker.css">
+    <link rel="stylesheet" href="https://jonthornton.github.io/jquery-timepicker/jquery.timepicker.css">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/blitzer/jquery-ui.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js">
     </script>
@@ -23,7 +23,7 @@
     <script>
     (function($) {
     $(function() {
-        $("input.timepicker").timepicker();
+        $("input.timepicker1").timepicker();
     });
     })(jQuery);
     </script>
@@ -31,7 +31,7 @@
     <script>
     (function($) {
     $(function() {
-        $("input.timepicker1").timepicker();
+        $("input.timepicker2").timepicker();
     });
     })(jQuery);
     </script>
@@ -92,7 +92,9 @@
 
 <div class="container">
     <div class="intro_text white-text div_zindex">
-      <form action="{% url 'offer:offerdetails' userid %}" method="post">
+        <!--"javascript:alert(document.getElementsByName('return_time')[0].value);"-->
+      <!--<form action="{% url 'offer:offerdetails' userid %}" method="post">-->
+        <form action="{% url 'offer:offerdetails' userid %}" method="post">
         {% csrf_token %}
         <div class="" style="padding-top:8%">
 
@@ -109,8 +111,6 @@
           </select>
         </div>-->
             <h3 style="color:#000;text-align: center;">Offer your Ride</h3>
-
-
             <div class="idealforms add-ride" style="text-align: center;">
                 <h5 style="color:#000;padding-left:1em;padding-top:1em"></h5>
                 <input type="text" id="fromlocation" name = "fromlocation" class="form-control"  placeholder="Leaving From" required>
@@ -130,7 +130,7 @@
                     <div style="width:12%"></div>
                     <div class="idealforms add-ride" style="width:  25%; display: table-cell;">
                         <h5 style="color:#000;padding-left:1em;padding-top:1em">Start Time</h5>
-                        <p><form> <input  type="text" class="timepicker" name="start_time"  style="color:Black;" required></form></p>
+                        <p> <input  type="text" class="timepicker1" name="start_time"  style="color:Black;" required></p>
                     </div>
                     <!-- <div class="idealforms add-ride" style="width:  30%; display: table-cell;">
                         <h5 style="color:#000;padding-left:1em;padding-top:1em">Start Time</h5>
@@ -141,7 +141,7 @@
 
                     <div class="idealforms add-ride" style="width:  25%; display: table-cell;">
                         <h5 style="color:#000;padding-left:1em;padding-top:1em">Return Time</h5>
-                        <p> <form> <input  type="text" class="timepicker1" name="return_time" style="color:Black;"  required></form></p>
+                            <p>  <input  type="text" class="timepicker1" name="return_time" style="color:Black;" required></p>
                     </div>
                     <!--<div class="idealforms add-ride" style="width:  30%; display: table-cell;">
                         <h5 style="color:#000;padding-left:1em;padding-top:1em">Return Time</h5>
@@ -201,6 +201,7 @@
                 <h5 style="color:#000; padding-left:1em; padding-top:1em"></h5>
 
                 <input type="submit" value="Post a Ride" class="btn btn-block">
+            </div>
             </form>
             <br>
             <a href="/">
@@ -214,28 +215,7 @@
 
 
 
-<!--<script type="text/javascript">
-    var formSubmitting = false;
-var setFormSubmitting = function() { formSubmitting = true; };
 
-window.onload = function() {
-    window.addEventListener("beforeunload", function (e) {
-        if (formSubmitting) {
-            return undefined;
-        }
-
-        var confirmationMessage = 'It looks like you have been editing something. '
-                                + 'If you leave before saving, your changes will be lost.';
-
-        (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-        return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
-    });
-};
-
-
-
-
-</script>-->
 <script>
     $(function(){
       $("#departure").datepicker({
