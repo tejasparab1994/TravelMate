@@ -25,5 +25,5 @@
 ## DEPLOYED TO:
 http://tmate.pythonanywhere.com/
 
-##GITHUB Repo:
+## GITHUB Repo:
 https://github.com/tejasparab1994/TravelMate
