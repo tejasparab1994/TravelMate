@@ -44,18 +44,19 @@
             <li><a href="dashboard-my-profile.html">My Profile</a></li>
           </ul>
         </li>-->
-        <li ><a href="">Username</a> <span class="arrow"></span>
+        <li ><a href="#">{{request.session.username}}</a> <span class="arrow"></span>
           <ul class="sub-menu">
             <li><a href="/myride">My Rides</a></li>
-
-            <li><a href="/index">Sign Out</a></li>
+            <li><a href="{% url 'offer:allofferedrides' request.session.userid %}">My Offerings</a></li>
+            <!--<li><a href="#">My Profile</a></li>-->
+            <li><a href="{% url 'travel:signout'%}">Sign Out</a></li>
           </ul>
         </li>
 
         <!--<li><a href="signin.html">Sign In</a></li>-->
       </ul>
       <div class="submit_listing">
-        <a href="/book" class="btn outline-btn"><!--<i class="fa  fa-plus-circle"></i>-->Search a Ride</a>
+        <a href="{% url 'book:index' request.session.userid %}" class="btn outline-btn"><!--<i class="fa  fa-plus-circle"></i>-->Book a Ride</a>
       </div>
     </div>
   </div>
@@ -70,128 +71,29 @@
 
     <div class="btn-group btn-group-toggle", style="padding-bottom:10px;">
       <button type="button" class="btn btn-primary">Past Rides</button>
-      <a href="upcoming" class="btn btn-default offset-3">Upcoming Rides</a>
+      <a href="{% url 'myride:upcoming'%}" class="btn btn-default offset-3">Upcoming Rides</a>
     </div>
 
-    <!-- <div class="card bg-light col-md-2">
-
-  </div> -->
+  {% if all_reservations %}
+  {% for reservation in all_reservations %}
   <div class="card bg-light mb-4">
     <div class="card-block">
       <div class="container">
 
         <img class="col-md-4" src="{% static "images/img_avatar.png" %}" alt="avatar" style="width:200px;"/>
-        <div class="card-body"><strong>Name:</strong>Loki</div>
+        <div class="card-body"><strong>Name:</strong>{{reservation.eid.uid.fname}} {{reservation.eid.uid.lname}}</div>
         <div class="card-body">
-          <strong>Start Date:</strong> 07/04/2017
-
+          <strong>Start Date:</strong> {{reservation.start_date}}
         </div>
-        <div class="card-body"><strong>End Date:</strong> 09/12/2017</div>
         <a href="rate" class="btn btn-primary btn-md-2">Rate</a>
-        <!-- <div class="card-body">
-          <a href="rate" class="btn btn-primary btn-md-2">Rate</a>
-        </div> -->
       </div>
     </div>
   </div>
-
-
-  <div class="card bg-light mb-4">
-    <div class="card-block">
-      <div class="container">
-        <img class="col-md-4" src="{% static "images/img_avatar.png" %}" alt="avatar" style="width:200px;"/>
-        <div class="card-body"><strong>Name:</strong>Thor</div>
-        <div class="card-body">
-          <strong>Start Date:</strong> 09/17/2017
-
-        </div>
-        <div class="card-body"><strong>End Date:</strong> 09/21/2017</div>
-          <a href="rate" class="btn btn-primary btn-md-2">Rate</a>
-
-        <!-- <div class="card-body">
-
-        </div> -->
-      </div>
-    </div>
-  </div>
-
-  <div class="card bg-light mb-4">
-    <div class="card-block">
-      <div class="container">
-        <img class="col-md-4" src="{% static "images/img_avatar.png" %}" alt="avatar" style="width:200px;"/>
-        <div class="card-body"><strong>Name:</strong>Peter Parker</div>
-        <div class="card-body">
-          <strong>Start Date:</strong> 09/25/2017
-        </div>
-        <div class="card-body"><strong>End Date:</strong> 09/25/2017</div>
-        <a href="rate" class="btn btn-primary btn-md-2">Rate</a>
-        <!-- <div class="card-body">
-
-        </div> -->
-      </div>
-    </div>
-  </div>
-
-
-  <div class="card bg-light mb-4">
-    <div class="card-block">
-      <div class="container">
-        <img class="col-md-4" src="{% static "images/img_avatar.png" %}" alt="avatar" style="width:200px;"/>
-        <div class="card-body"><strong>Name:</strong>Star Lord</div>
-        <div class="card-body">
-          <strong>Start Date:</strong>  09/26/2017
-        </div>
-        <div class="card-body"><strong>End Date:</strong> 10/03/2017</div>
-        <a href="rate" class="btn btn-primary btn-md-2">Rate</a>
-        <!-- <div class="card-body">
-
-        </div> -->
-      </div>
-    </div>
-  </div>
-
-
-  <div class="card bg-light mb-4">
-    <div class="card-block">
-      <div class="container">
-          <img class="col-md-4" src="{% static "images/img_avatar.png" %}" alt="avatar" style="width:200px;"/>
-
-        <div class="card-body"><strong>Name:</strong>Mary Jane Watson</div>
-        <div class="card-body">
-          <strong>Start Date:</strong> 10/10/2017
-
-        </div>
-        <div class="card-body"><strong>End Date:</strong> 12/31/2017</div>
-          <a href="rate" class="btn btn-primary btn-md-2">Rate</a>
-        <!-- <div class="card-body">
-
-        </div> -->
-      </div>
-    </div>
-  </div>
-
-  <div class="card bg-light mb-4">
-    <div class="card-block">
-      <div class="container">
-        <img class="col-md-4" src="{% static "images/img_avatar.png" %}" alt="avatar" style="width:200px;"/>
-        <div class="card-body"><strong>Name:</strong>Aly</div>
-        <div class="card-body">
-          <strong>Start Date:</strong> 11/11/2017
-
-        </div>
-        <div class="card-body"><strong>End Date:</strong> 12/01/2018</div>
-        <a href="rate" class= "btn btn-primary btn-md-2">Rate</a>
-        <!-- <div class="card-body">
-
-        </div> -->
-      </div>
-    </div>
-  </div>
-
-
-
-
-  </div>
+  {% endfor %}
+  {% else %}
+  <h3>Sorry, you have no Past Rides :(</h3>
+  {% endif %}
+</div>
 </div>
 
 </body>

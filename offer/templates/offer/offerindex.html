@@ -13,7 +13,7 @@
 
 <!--Date Picker-->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"> </script>
-    <link rel="stylesheet" href="https://jonthornton.github.io/jquery-timepicker/jquery.timepicker.css">
+<link rel="stylesheet" href="https://jonthornton.github.io/jquery-timepicker/jquery.timepicker.css">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/blitzer/jquery-ui.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js">
     </script>
@@ -23,7 +23,15 @@
     <script>
     (function($) {
     $(function() {
-        $("input.timepicker1").timepicker();
+        $("input.timepicker").timepicker({ 'timeFormat': 'H:i' });
+    });
+    })(jQuery);
+    </script>
+
+    <script>
+    (function($) {
+    $(function() {
+        $("input.timepicker1").timepicker({ 'timeFormat': 'H:i' });
     });
     })(jQuery);
     </script>
@@ -59,18 +67,19 @@
                     <li><a href="dashboard-my-profile.html">My Profile</a></li>
                   </ul>
                 </li>-->
-                    <li><a href="">Username</a> <span class="arrow"></span>
+                    <li><a href="#">{{request.session.username}}</a> <span class="arrow"></span>
                         <ul class="sub-menu">
                             <li><a href="/myride">My Rides</a></li>
-
-                            <li><a href="{% url 'travel:index' %}">Sign Out</a></li>
+                            <!--<li><a href="#">My Profile</a></li>-->
+                            <li><a href="{% url 'offer:allofferedrides' request.session.userid%}">My Offerings</a></li>
+                            <li><a href="{% url 'travel:signout'%}">Sign Out</a></li>
                         </ul>
                     </li>
 
                     <!--<li><a href="signin.html">Sign In</a></li>-->
                 </ul>
                 <div class="submit_listing">
-                    <a href="/book" class="btn outline-btn"><!--<i class="fa  fa-plus-circle"></i>-->Search a ride</a>
+                    <a href="{% url 'book:index' request.session.userid %}" class="btn outline-btn"><!--<i class="fa  fa-plus-circle"></i>-->Book a ride</a>
                 </div>
             </div>
         </div>
@@ -84,9 +93,7 @@
 
 <div class="container">
     <div class="intro_text white-text div_zindex">
-        <!--"javascript:alert(document.getElementsByName('return_time')[0].value);"-->
-      <!--<form action="{% url 'offer:offerdetails' userid %}" method="post">-->
-        <form action="{% url 'offer:offerdetails' userid %}" method="post">
+      <form action="{% url 'offer:offerdetails' userid %}" method="post">
         {% csrf_token %}
         <div class="" style="padding-top:8%">
 
@@ -103,6 +110,8 @@
           </select>
         </div>-->
             <h3 style="color:#000;text-align: center;">Offer your Ride</h3>
+
+
             <div class="idealforms add-ride" style="text-align: center;">
                 <h5 style="color:#000;padding-left:1em;padding-top:1em"></h5>
                 <input type="text" id="fromlocation" name = "fromlocation" class="form-control"  placeholder="Leaving From" required>
@@ -165,7 +174,7 @@
 
                 <div class="idealforms add-ride" style="width: 45%; display: table-cell;">
                     <h5 style="color:#000;padding-left:1em;padding-top:1em">License Plate No</h5>
-                    <input type="text" id="licensenumber" name = "car_no" class="form-control" required>
+                    <input type="number" id="licensenumber" name = "car_no" class="form-control" onkeydown="javascript: return event.keyCode == 69 ? false : true" required>
                 </div>
             </div>
 
@@ -178,27 +187,31 @@
                         <option value="2">2</option>
                         <option value="3">3</option>
                         <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
+
                     </select>
                 </div>
 
                 <div style="width=10%"></div>
                 <div class="idealforms add-ride" style="width:  45%; display: table-cell;">
-                    <h5 style="color:#000;padding-left:1em;padding-top:1em">Fare</h5>
-                    <input type="number" id="fare" name = "fare" min="0.0" step="1" class="form-control" placeholder="Enter Fare" required>
+                    <h5 style="color:#000;padding-left:1em;padding-top:1em">Monthly Fare</h5>
+                    <input type="number" id="fare" name = "fare" min="0.0" step="1" class="form-control" placeholder="Enter Monthly Fare/Seat ($)" required>
                 </div>
             </div>
 
                 <h5 style="color:#000; padding-left:1em; padding-top:1em"></h5>
-
-                <input type="submit" value="Post a Ride" class="btn btn-block">
-            </div>
+                <div style="width: 100%; padding-top:3%;display: table;">
+                    <div class="idealforms add-ride" style="width:  45%;padding-left: 30%; display: table-cell;">
+                        <a href="/"> <input value="Cancel"  class="btn btn-block" style="background:Red; padding: 1.2em "></a>
+                    </div>
+                    <div style="width=0%"></div>
+                     <div class="idealforms add-ride" style="width:45%;padding-right: 30%; display: table-cell;">
+                        <input type="submit" value="Post a Ride" class="btn btn-block">
+                     </div>
+                 </div>
             </form>
             <br>
-            <a href="/">
-                <input  value="Cancel"  class="btn btn-block"
-                       style="background:Red; padding: 1.2em "></a>
+
+
 
             <h5 style="color:#000; padding-left:1em; padding-top:1em"></h5>
         </div>
@@ -207,7 +220,28 @@
 
 
 
+<!--<script type="text/javascript">
+    var formSubmitting = false;
+var setFormSubmitting = function() { formSubmitting = true; };
 
+window.onload = function() {
+    window.addEventListener("beforeunload", function (e) {
+        if (formSubmitting) {
+            return undefined;
+        }
+
+        var confirmationMessage = 'It looks like you have been editing something. '
+                                + 'If you leave before saving, your changes will be lost.';
+
+        (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+        return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+    });
+};
+
+
+
+
+</script>-->
 <script>
     $(function(){
       $("#departure").datepicker({

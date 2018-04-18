@@ -53,17 +53,18 @@ $(document).ready(function(){
             <li><a href="dashboard-my-profile.html">My Profile</a></li>
           </ul>
         </li>-->
-        <li ><a href="">Username</a> <span class="arrow"></span>
+        <li ><a href="#">{{request.session.username}}</a> <span class="arrow"></span>
           <ul class="sub-menu">
             <li><a href="/myride">My Rides</a></li>
-            <li><a href="/index">Sign Out</a></li>
+            <!--<li><a href="#">My Profile</a></li>-->
+            <li><a href="{% url 'travel:signout'%}">Sign Out</a></li>
           </ul>
         </li>
 
         <!--<li><a href="signin.html">Sign In</a></li>-->
       </ul>
       <div class="submit_listing">
-        <a href="/book" class="btn outline-btn"><!--<i class="fa  fa-plus-circle"></i>-->Search a ride</a>
+        <a href="{% url 'book:index' request.session.userid %}" class="btn outline-btn"><!--<i class="fa  fa-plus-circle"></i>-->Book a ride</a>
       </div>
     </div>
   </div>
@@ -87,11 +88,17 @@ $(document).ready(function(){
         <div class="card-body"><strong>Start Date: </strong> {{enlist.start_date}}</div>
         <div class="card-body"><strong>Start Time: </strong> {{enlist.start_time}}</div>
         <div class="card-body"><strong>Return Time: </strong> {{enlist.return_time}}</div>
+        <div class="card-body"><strong>From : </strong> {{enlist.from_loc}}</div>
+        <div class="card-body"><strong>To : </strong> {{enlist.to_loc}}</div>
         <div class="card-body"><strong>Car Model: </strong> {{enlist.car_model}}</div>
         <div class="card-body"><strong>Car No: </strong> {{enlist.car_no}}</div>
 
         <div class=" text-right">
-          <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"> Remove </button>
+          <form action="{% url 'offer:deleteride' request.session.userid %}" method="post">
+          {% csrf_token %}
+            <input type="hidden" name="eid" class="form-control" value={{enlist.id}}>
+            <input type="submit" value="Remove" class="btn btn-danger">
+          </form>
         </div>
         </div>
        <!-- <div class="card-block, text-right">
